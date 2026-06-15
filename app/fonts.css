@@ -1,0 +1,74 @@
+/* Base typography (no font-family references) */
+
+body,
+.text-body {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.25em;
+  letter-spacing: 0.05em;
+}
+
+/* Headings */
+
+h1,
+.h1 {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.333em;
+  letter-spacing: 0.05em;
+}
+
+h2,
+.h2 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.333em;
+  letter-spacing: 0.05em;
+}
+
+h3,
+.h3 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.333em;
+  letter-spacing: 0.05em;
+}
+
+h4,
+.h4 {
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Collab text */
+
+.text-collab {
+  font-style: italic;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive styles (tablet+) */
+@media (min-width: 768px) {
+  h1,
+  .h1 {
+    font-size: 28px;
+  }
+
+  h2,
+  .h2 {
+    font-size: 24px;
+  }
+
+  h3,
+  .h3 {
+    font-size: 18px;
+  }
+
+  h4,
+  .h4 {
+    font-size: 14px;
+  }
+}

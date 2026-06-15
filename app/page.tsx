@@ -1,15 +1,11 @@
-import Image from "next/image";
 import Navigation from "./components/nav";
-import NathanQuotes from "./components/section-nathan-quotes";
-
+import LandingPage from "./sections/section-landing-page";
 
 export default function Home() {
   return (
     <main className="">
       <Navigation/>
-      <div>
-        <NathanQuotes />
-      </div>
+      <LandingPage />
     </main>
   );
 }
