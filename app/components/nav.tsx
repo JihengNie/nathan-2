@@ -8,52 +8,45 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-
-    handleScroll(); // run once on mount
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div
       className={`
-        sticky top-0 left-0 w-full grid grid-cols-3 px-20
+        sticky top-0 w-full px-6 lg:px-20
+        flex items-center justify-center
         transition-colors duration-500
+        relative
         ${scrolled ? "bg-white text-black shadow-sm" : "bg-transparent text-white"}
       `}
     >
-      {/* LEFT */}
-      <ul className="flex items-center gap-20">
-        <li>
-          <Link href="/">Home</Link>
-        </li>
+      {/* LEFT (desktop only) */}
+      <ul className="hidden lg:flex items-center gap-20 absolute left-20">
         <li>
           <Link href="/quotes">Quotes</Link>
         </li>
       </ul>
 
-      {/* CENTER LOGO */}
-      <div className="flex justify-center items-center">
-        <Link href="/">
-          <div className="aspect-square h-[60px] w-[60px]">
-            <Image
-              className="flex h-full w-full object-contain"
-              src="/images/nathan-sketch.png"
-              alt="Simpson Wave"
-              width={60}
-              height={60}
-              unoptimized
-            />
-          </div>
-        </Link>
-      </div>
+      {/* CENTER LOGO (always perfectly centered) */}
+      <Link href="/">
+        <div className="h-[60px] w-[60px]">
+          <Image
+            className="h-full w-full object-contain"
+            src="/images/nathan-sketch.png"
+            alt="Logo"
+            width={60}
+            height={60}
+            unoptimized
+          />
+        </div>
+      </Link>
 
-      {/* RIGHT */}
-      <ul className="flex items-center gap-20 justify-end">
+      {/* RIGHT (desktop only) */}
+      <ul className="hidden lg:flex items-center gap-20 absolute right-20">
         <li>
           <Link href="/about">About Nathan</Link>
         </li>

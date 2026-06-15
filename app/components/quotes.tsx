@@ -266,8 +266,12 @@ const quotes: Quote[] = [
   },
 ];
 
-function getRandomQuote(list: Quote[]): Quote {
-  return list[Math.floor(Math.random() * list.length)];
+function getRandomQuoteExcluding(list: Quote[], exclude?: Quote | null): Quote {
+  const filtered = exclude
+    ? list.filter((q) => q.text !== exclude.text || q.date !== exclude.date)
+    : list;
+
+  return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
 export default function NathanQuotes() {
@@ -293,7 +297,7 @@ export default function NathanQuotes() {
       : quotes.filter((q) => q.author === selectedAuthor);
 
   useEffect(() => {
-    setQuote(getRandomQuote(filteredQuotes));
+    setQuote(getRandomQuoteExcluding(filteredQuotes));
   }, [selectedAuthor]);
 
   if (!quote) return null;
@@ -333,7 +337,7 @@ export default function NathanQuotes() {
 
       {/* NEW QUOTE */}
       <button
-        onClick={() => setQuote(getRandomQuote(filteredQuotes))}
+        onClick={() => setQuote(getRandomQuoteExcluding(filteredQuotes, quote))}
         className="btn"
       >
         New Quote
