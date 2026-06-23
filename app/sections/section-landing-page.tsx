@@ -23,13 +23,14 @@ export default function LandingPage() {
         <div className="content flex text-white flex-col items-center">
           <p>Go and explore some pages</p>
 
-          <div className="flex my-4 gap-3">
+          <div className="flex my-4 gap-3 flex-wrap justify-center">
             <Link href="/quotes" className="btn">
               Quotes
             </Link>
             <Link href="/about" className="btn">
               About
             </Link>
+            <Link href="/tyla" className="btn w-full">Nathan's Best friend, Tyla</Link>
           </div>
         </div>
       </div>

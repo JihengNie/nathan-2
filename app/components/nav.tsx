@@ -20,6 +20,7 @@ export default function Navigation() {
         sticky top-0 w-full px-6 lg:px-20
         flex items-center justify-center
         transition-colors duration-500
+        z-[3]
         relative
         ${scrolled ? "bg-white text-black shadow-sm" : "bg-transparent text-white"}
       `}
@@ -28,6 +29,9 @@ export default function Navigation() {
       <ul className="hidden lg:flex items-center gap-20 absolute left-20">
         <li>
           <Link href="/quotes">Quotes</Link>
+        </li>
+        <li>
+          <Link href="/tyla">Tyla</Link>
         </li>
       </ul>
 
