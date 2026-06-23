@@ -106,7 +106,7 @@ const quotes: Quote[] = [
   },
   {
     text: "that man is not white, his nipples are brown",
-    author: "Ross",
+    author: "The Weiner Man",
     date: "7/12/25",
   },
   {
@@ -176,7 +176,7 @@ const quotes: Quote[] = [
   },
   {
     text: "The one drop rule applies / I'm professionally racist",
-    author: "Ross",
+    author: "The Weiner Man",
     date: "4/27/26",
   },
   {
@@ -186,17 +186,17 @@ const quotes: Quote[] = [
   },
   {
     text: "I don't like blind people",
-    author: "Ross",
+    author: "The Weiner Man",
     date: "5/15/26",
   },
   {
-    text: "If I ever make a post like that, I need one of you to break into my house and shoot me dead",
+    text: "If I ever make a post like that, I need one of you to break into my house and shoot me dead (talking about Linkedin posts)",
     author: "Seth",
-    date: "5/21/26",
+    date: "6/9/26, 1:03 PM",
   },
   {
     text: "If i became rich i would immediately turn on the renter class",
-    author: "Ross",
+    author: "The Weiner Man",
     date: "6/9/26, 1:03 PM",
   },
   {
@@ -325,15 +325,15 @@ export default function NathanQuotes() {
       </div>
 
       {/* DATE */}
-      <div className="text-sm opacity-60">{quote.date}</div>
+      <div className="text-white text-sm opacity-60">{quote.date}</div>
 
       {/* QUOTE */}
-      <blockquote className="max-w-xl text-center text-xl italic">
+      <blockquote className="max-w-xl text-center text-xl text-white italic">
         “{quote.text}”
       </blockquote>
 
       {/* AUTHOR */}
-      <div className="text-sm font-medium">— {quote.author}</div>
+      <div className="text-sm font-medium text-white  ">— {quote.author}</div>
 
       {/* NEW QUOTE */}
       <button
