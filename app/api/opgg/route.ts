@@ -13,7 +13,7 @@ export async function GET() {
   const html = await res.text();
   const $ = cheerio.load(html);
 
-  let result = {
+  const result = {
     tier: "",
     lp: "",
     wins: "",
@@ -21,37 +21,69 @@ export async function GET() {
     winrate: "",
   };
 
-  // 🔥 Find the Ranked Solo/Duo section by text anchor
+  // Find Ranked Solo/Duo section
   const rankedSection = $("section")
-    .filter((_, el) => $(el).text().includes("Ranked Solo/Duo"))
+    .filter((_, el) =>
+      $(el).text().includes("Ranked Solo/Duo")
+    )
     .first();
 
-  if (rankedSection.length) {
-    const text = rankedSection.text();
+  if (!rankedSection.length) {
+    return Response.json(result);
+  }
 
-    // ✅ Tier (gold 3, silver 2, etc.)
-    // This works because "gold 3" is inside a strong tag in your HTML
-    result.tier =
-      rankedSection.find("strong").first().text().trim() ||
-      text.match(/(iron|bronze|silver|gold|platinum|emerald|diamond|master|grandmaster|challenger)\s*\d?/i)?.[0] ||
-      "";
+  // -----------------------------
+  // ✅ TIER (more stable extraction)
+  // -----------------------------
+  result.tier =
+    rankedSection
+      .find("strong")
+      .first()
+      .text()
+      .trim()
+    ||
+    rankedSection.text().match(
+      /(iron|bronze|silver|gold|platinum|emerald|diamond|master|grandmaster|challenger)\s*\d?/i
+    )?.[0]
+    ||
+    "";
 
-    // ✅ LP (81 LP)
-    const lpMatch = text.match(/(\d+)\s*LP/);
-    if (lpMatch) result.lp = `${lpMatch[1]} LP`;
+  // -----------------------------
+  // ✅ LP (FIXED - no full text scan)
+  // -----------------------------
+  const lpNode = rankedSection
+    .find("*")
+    .filter((_, el) => {
+      const t = $(el).text().trim();
+      return /^\d+\s*LP$/.test(t);
+    })
+    .first()
+    .text()
+    .trim();
 
-    // ✅ Wins / Losses (16W 8L)
-    const wlMatch = text.match(/(\d+)\s*W\s*(\d+)\s*L/);
-    if (wlMatch) {
-      result.wins = wlMatch[1];
-      result.losses = wlMatch[2];
-    }
+  const lpMatch = lpNode.match(/(\d+)\s*LP/);
+  if (lpMatch) {
+    result.lp = `${lpMatch[1]} LP`;
+  }
 
-    // ✅ Winrate (67%)
-    const wrMatch = text.match(/Win rate\s*(\d+)%/);
-    if (wrMatch) {
-      result.winrate = wrMatch[1];
-    }
+  // -----------------------------
+  // ✅ WINS / LOSSES
+  // -----------------------------
+  const wlNode = rankedSection.text();
+
+  const wlMatch = wlNode.match(/(\d+)\s*W\s*(\d+)\s*L/);
+  if (wlMatch) {
+    result.wins = wlMatch[1];
+    result.losses = wlMatch[2];
+  }
+
+  // -----------------------------
+  // ✅ WINRATE
+  // -----------------------------
+  const wrMatch = wlNode.match(/(\d+)%\s*Win Rate|Win rate\s*(\d+)%/i);
+
+  if (wrMatch) {
+    result.winrate = wrMatch[1] || wrMatch[2];
   }
 
   return Response.json(result);

@@ -11,6 +11,8 @@ export default function LandingPageTyla() {
   const age = currentYear - birthYear;
 
   const [rank, setRank] = useState<any>(null);
+  const [clicked, setClicked] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -26,8 +28,46 @@ export default function LandingPageTyla() {
     load();
   }, []);
 
+  // ✅ Check localStorage on load
+  useEffect(() => {
+    const stored = localStorage.getItem("TylaNudeClicked");
+
+    if (stored === "true") {
+      setClicked(true);
+      setShowPopup(true);
+    }
+  }, []);
+
+  const handleClick = () => {
+    localStorage.setItem("TylaNudeClicked", "true");
+    setClicked(true);
+    setShowPopup(true);
+  };
+
   return (
-    <div className="section__tyla-landing flex min-h-screen flex-col items-center justify-center p-4">
+    <div className="section__tyla-landing flex min-h-screen flex-col items-center justify-center p-4 relative">
+
+      {/* 🔥 POPUP */}
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="rounded-2xl bg-white p-6 text-black shadow-xl w-[300px] text-center">
+            <h2 className="text-lg font-bold">Notice</h2>
+            <p className="mt-2 text-sm">
+              You've clicked to see his nudes 👀
+            </p>
+
+            <button
+              onClick={() => {
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+              }}
+              className="mt-4 btn"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       <h1 className="mb-2 text-4xl font-bold text-white">
         Swipe Through Tyla&apos;s Pictures
       </h1>
@@ -41,40 +81,25 @@ export default function LandingPageTyla() {
 
               <SwiperSlide className="h-full">
                 <div className="relative h-full w-full">
-                  <Image
-                    src="/images/tyla-profile.png"
-                    alt="Tyla"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src="/images/tyla-profile.png" alt="Tyla" fill className="object-cover" />
                 </div>
               </SwiperSlide>
 
               <SwiperSlide className="h-full">
                 <div className="relative h-full w-full">
-                  <Image
-                    src="/images/tyla-profile-1.png"
-                    alt="Tyla 2"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src="/images/tyla-profile-1.png" alt="Tyla 2" fill className="object-cover" />
                 </div>
               </SwiperSlide>
 
               <SwiperSlide className="h-full">
                 <div className="relative h-full w-full">
-                  <Image
-                    src="/images/tyla-profile-2.png"
-                    alt="Tyla 3"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src="/images/tyla-profile-2.png" alt="Tyla 3" fill className="object-cover" />
                 </div>
               </SwiperSlide>
 
             </Swiper>
 
-            {/* OVERLAY (UNCHANGED) */}
+            {/* OVERLAY */}
             <div className="absolute bottom-0 left-0 right-0 z-[1] bg-gradient-to-t from-black/80 via-black/30 to-transparent p-6 text-white">
               <h2 className="text-3xl font-bold">
                 Tyla <span className="font-normal">{age}</span>
@@ -113,21 +138,27 @@ export default function LandingPageTyla() {
 
             {rank ? (
               <div className="mt-2 space-y-1 text-sm opacity-90">
-                <p>
-                  Tier: <b>{rank.tier || "Unranked"}</b>
-                </p>
-                <p>
-                  LP: <b>{rank.lp || "0 LP"}</b>
-                </p>
-                <p>
-                  Record: <b>{rank.wins}W / {rank.losses}L</b>
-                </p>
-                <p>
-                  Winrate: <b>{rank.winrate ? `${rank.winrate}%` : "0%"}</b>
-                </p>
+                <p>Tier: <b>{rank.tier || "Unranked"}</b></p>
+                <p>LP: <b>{rank.lp || "0 LP"}</b></p>
+                <p>Record: <b>{rank.wins}W / {rank.losses}L</b></p>
+                <p>Winrate: <b>{rank.winrate ? `${rank.winrate}%` : "0%"}</b></p>
               </div>
             ) : (
               <p className="mt-2 text-sm opacity-60">Loading rank...</p>
+            )}
+
+            {/* 🔘 BUTTON */}
+            <button
+              onClick={handleClick}
+              className="mt-4 w-full btn"
+            >
+              Click Here to see his Nudes 👀
+            </button>
+
+            {clicked && (
+              <p className="mt-2 text-xs text-white/70">
+                You're weird 👀
+              </p>
             )}
           </div>
 
