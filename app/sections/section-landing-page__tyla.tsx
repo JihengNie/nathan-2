@@ -5,6 +5,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useEffect, useState } from "react";
 
+const popupMessages = [
+  "You've clicked to see his 👀",
+  "Caught in 4K looking 👀",
+  "You really thought there was something here? 😂",
+  "Down horrendous 💀",
+  "Nice try 😏",
+  "BONK! Straight to horny jail 🚔",
+  "That's crazy... you actually clicked it 😂",
+  "Congratulations, you've been baited 🎣",
+  "You're exactly the audience for this button 👀",
+  "Curiosity got the better of you 😭",
+];
+
 export default function LandingPageTyla() {
   const birthYear = 1999;
   const currentYear = new Date().getFullYear();
@@ -13,6 +26,7 @@ export default function LandingPageTyla() {
   const [rank, setRank] = useState<any>(null);
   const [clicked, setClicked] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState(popupMessages[0]);
 
   useEffect(() => {
     async function load() {
@@ -28,11 +42,11 @@ export default function LandingPageTyla() {
     load();
   }, []);
 
-  // ✅ Check localStorage on load
+  // Remove stored value every time page loads
   useEffect(() => {
-    const stored = localStorage.getItem("TylaNudeClicked");
+    const hasClicked = localStorage.getItem("TylaNudeClicked") === "true";
 
-    if (stored === "true") {
+    if (hasClicked) {
       setClicked(true);
       setShowPopup(true);
     }
@@ -40,25 +54,42 @@ export default function LandingPageTyla() {
 
   const handleClick = () => {
     localStorage.setItem("TylaNudeClicked", "true");
+
+    const randomMessage =
+      popupMessages[Math.floor(Math.random() * popupMessages.length)];
+
+    setPopupMessage(randomMessage);
     setClicked(true);
-    setShowPopup(true);
+  };
+
+  const getRandomMessage = () => {
+    let next = popupMessage;
+
+    while (next === popupMessage) {
+      next =
+        popupMessages[Math.floor(Math.random() * popupMessages.length)];
+    }
+
+    return next;
   };
 
   return (
     <div className="section__tyla-landing flex min-h-screen flex-col items-center justify-center p-4 relative">
-
-      {/* 🔥 POPUP */}
+      {/* POPUP */}
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
           <div className="rounded-2xl bg-white p-6 text-black shadow-xl w-[300px] text-center">
             <h2 className="text-lg font-bold">Notice</h2>
-            <p className="mt-2 text-sm">
-              You've clicked to see his nudes 👀
-            </p>
-
+            <p className="mt-2 text-sm">{popupMessage}</p>
             <button
               onClick={() => {
-                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                setPopupMessage(getRandomMessage());
+
+                window.open(
+                  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                  "_blank",
+                  "noopener,noreferrer"
+                );
               }}
               className="mt-4 btn"
             >
@@ -73,30 +104,42 @@ export default function LandingPageTyla() {
       </h1>
 
       <div className="flex w-full max-w-5xl flex-col items-center gap-6 md:flex-row md:justify-center md:items-start">
-
         {/* SWIPER CARD */}
         <div className="relative h-[600px] w-[340px] overflow-hidden rounded-3xl shadow-2xl">
           <div className="h-full w-full">
             <Swiper slidesPerView={1} className="h-full w-full">
-
               <SwiperSlide className="h-full">
                 <div className="relative h-full w-full">
-                  <Image src="/images/tyla-profile.png" alt="Tyla" fill className="object-cover" />
+                  <Image
+                    src="/images/tyla-profile.png"
+                    alt="Tyla"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </SwiperSlide>
 
               <SwiperSlide className="h-full">
                 <div className="relative h-full w-full">
-                  <Image src="/images/tyla-profile-1.png" alt="Tyla 2" fill className="object-cover" />
+                  <Image
+                    src="/images/tyla-profile-1.png"
+                    alt="Tyla 2"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </SwiperSlide>
 
               <SwiperSlide className="h-full">
                 <div className="relative h-full w-full">
-                  <Image src="/images/tyla-profile-2.png" alt="Tyla 3" fill className="object-cover" />
+                  <Image
+                    src="/images/tyla-profile-2.png"
+                    alt="Tyla 3"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </SwiperSlide>
-
             </Swiper>
 
             {/* OVERLAY */}
@@ -113,18 +156,22 @@ export default function LandingPageTyla() {
 
         {/* STATS / BIO SECTION */}
         <div className="w-full max-w-md rounded-2xl border border-white/10 bg-black/85 p-4 text-white md:w-[340px]">
-
           <div>
             <p className="text-sm leading-relaxed opacity-90">
-              Tyla was the kind of guy who always had confidence right up until the moment the cards were dealt or the match loaded.
+              Tyla was the kind of guy who always had confidence right up until
+              the moment the cards were dealt or the match loaded.
             </p>
 
             <p className="mt-2 text-sm leading-relaxed opacity-90">
-              He lived in a small apartment filled with snack wrappers, secondhand furniture, and the steady glow of a monitor that had seen far too many late-night losses. Tyla loved games—maybe a little too much for his own good.
+              He lived in a small apartment filled with snack wrappers,
+              secondhand furniture, and the steady glow of a monitor that had
+              seen far too many late-night losses. Tyla loved games—maybe a
+              little too much for his own good.
             </p>
 
             <p className="mt-2 text-sm leading-relaxed opacity-90">
-              League of Legends wasn’t much kinder to him. He queued up again and again, convinced the next game would be the one.
+              League of Legends wasn’t much kinder to him. He queued up again
+              and again, convinced the next game would be the one.
             </p>
 
             <p className="mt-2 text-sm leading-relaxed opacity-90">
@@ -132,27 +179,41 @@ export default function LandingPageTyla() {
             </p>
           </div>
 
-          {/* 🔥 RANK SECTION */}
+          {/* RANK SECTION */}
           <div className="mt-6 border-t border-white/10 pt-4">
             <h3 className="text-lg font-semibold">Ranked Solo/Duo</h3>
 
             {rank ? (
               <div className="mt-2 space-y-1 text-sm opacity-90">
-                <p>Tier: <b>{rank.tier || "Unranked"}</b></p>
-                <p>LP: <b>{rank.lp || "0 LP"}</b></p>
-                <p>Record: <b>{rank.wins}W / {rank.losses}L</b></p>
-                <p>Winrate: <b>{rank.winrate ? `${rank.winrate}%` : "0%"}</b></p>
+                <p>
+                  Tier: <b>{rank.tier || "Unranked"}</b>
+                </p>
+                <p>
+                  LP: <b>{rank.lp || "0 LP"}</b>
+                </p>
+                <p>
+                  Record:{" "}
+                  <b>
+                    {rank.wins}W / {rank.losses}L
+                  </b>
+                </p>
+                <p>
+                  Winrate:{" "}
+                  <b>
+                    {rank.winrate ? `${rank.winrate}%` : "0%"}
+                  </b>
+                </p>
               </div>
             ) : (
               <p className="mt-2 text-sm opacity-60">Loading rank...</p>
             )}
 
-            {/* 🔘 BUTTON */}
+            {/* BUTTON */}
             <button
               onClick={handleClick}
               className="mt-4 w-full btn"
             >
-              Click Here to see his Nudes 👀
+              Click Here to see his 👀
             </button>
 
             {clicked && (
@@ -161,12 +222,9 @@ export default function LandingPageTyla() {
               </p>
             )}
           </div>
-
         </div>
-
       </div>
 
-      {/* Swiper fix */}
       <style jsx global>{`
         .swiper,
         .swiper-wrapper,

@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function SectionMainBody() {
   return (
     <main className="">
-      <div className="mx-auto max-w-6xl px-4 py-10 flex flex-col lg:flex-row gap-8">
+      <div className="mx-auto max-w-6xl px-4 py-10 flex flex-col lg:flex-row gap-8 text-white">
         
         {/* LEFT: Main text */}
         <div className="flex-1">
@@ -32,7 +32,7 @@ export default function SectionMainBody() {
 
           <div className="mb-2 grid grid-cols-2 gap-2">
             <Image
-              src="/images/nathan-club-1.png"
+              src="/images/ColterandNathan.png"
               alt="nathan at club"
               width={260}
               height={260}
